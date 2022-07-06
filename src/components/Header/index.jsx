@@ -68,7 +68,7 @@ export default function() {
           <div className='search-items'>
               <SearchOutlined style={{marginTop:'25px'}}/>
               <span>
-                  <Input placeholder="周杰伦新专辑" />
+                  <Input placeholder="周杰伦专辑" />
               </span>
               
           </div>
