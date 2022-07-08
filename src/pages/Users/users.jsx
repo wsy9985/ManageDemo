@@ -1,8 +1,8 @@
 import { Space, Table, Tag, Pagination, message, Button, Modal, Form, Input, } from 'antd';
 import axios from 'axios'
 import { useState, useEffect, Component } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './users.css'
-
 
 const Users = () => {
     const columns = [
@@ -49,17 +49,18 @@ const Users = () => {
 
     
     /* 状态定义 */
-    let [data, setDate] = useState([]);
+    let [data, setData] = useState([]);
     let [total, setTotal] = useState(0);
     let [current, setCurrent] = useState(1);
-    let [pageNum ,setPageNum] = useState(1);
     let [pageSize, setPageSize] = useState(8);
     let [keyid, setKeyid] = useState(null); // 修改时引入id
     let [keyName, setKeyName] = useState(null); // 查询时记录输入框value
     
     const confirm = Modal.confirm;
+    let navigate = useNavigate()
     const [email, setEmail] = useState()
     const [mobile, setMobile] = useState()
+    const [roleName, setRoleName] = useState()
     const [isModalVisible, setIsModalVisible] = useState(false); 
     const [isModalVisible2, setIsModalVisible2] = useState(false);
     
@@ -98,7 +99,7 @@ const Users = () => {
             users.forEach((r, i) => {
                 r.key = i;
             })
-            setDate(users);
+            setData(users);
         })
     }
 
@@ -142,11 +143,21 @@ const Users = () => {
         
 
     /* 修改记录的回调 */
-    const update = (record) => {
-        setKeyid(record.id)   
-        setEmail(record.email) 
+    const update = (record) => { 
+        setKeyid(record.id)
+        handleEmail(record.email)
         setMobile(record.mobile)
         setIsModalVisible2(true);
+    }
+
+    const handleEmail = (value)=>{
+        setEmail(
+            ()=>{
+                const newEmail = value
+                console.log(newEmail);
+                return newEmail
+            }
+        )
     }
 
     const handleOk2 = ({
@@ -166,7 +177,8 @@ const Users = () => {
         })
         // 获取成功结果
         .then(res => {
-            let { meta } = res.data;
+            let { meta} = res.data;
+            console.log((res.data.data));
             if (meta.status === 200) {
                 message.success(meta.msg);
                 /* 刷新渲染,并关闭模态框 */
@@ -221,24 +233,23 @@ const Users = () => {
     };
 
     /* 取消修改的对话框 */
-    const handleCancel2 = () => {
+    const handleCancel2 = (r) => {  
+        // window.location.reload()
+        
+        form2.resetFields()
         setIsModalVisible2(false);
     };
+
 
     /* 增改失败时提示 */
     const onFinishFailed = () => {
         message.error('校验失败,请重试')
     };
 
-    
-
     /* 查询记录的回调 */
     const query = () => {
-        console.log(keyName);
         setCurrent(1);
-        showTable(1,pageSize,keyName)
-        console.log(data);
-                  
+        showTable(1,pageSize,keyName)              
     }
 
     /* 记录对话框value */
@@ -264,7 +275,6 @@ const Users = () => {
                 showSizeChanger // 显示页数选择
                 showQuickJumper // 显示跳转选择
                 onChange={changePageMode} // page和pageSize改变的回调
-                
                 showTotal={total => `共 ${total} 项`}
             />
 
@@ -356,7 +366,7 @@ const Users = () => {
             </Modal>
 
             {/* 修改用户信息 */}
-            <Modal title="修改信息" footer={null} visible={isModalVisible2} onCancel={handleCancel2}>
+            <Modal title="修改信息"  footer={null} visible={isModalVisible2} onCancel={handleCancel2}>
                 <Form
                     name="basic"
                     labelCol={{
@@ -366,9 +376,9 @@ const Users = () => {
                         span: 16,
                     }}
                     initialValues={{email,mobile}}
+                    
                     onFinish={handleOk2}
                     onFinishFailed={onFinishFailed}
-                    autoComplete="off"
                     form={form2}
                 >
                     <Form.Item
@@ -396,6 +406,8 @@ const Users = () => {
                     >
                         <Input />
                     </Form.Item>
+
+
 
                         <Form.Item
                             wrapperCol={{
