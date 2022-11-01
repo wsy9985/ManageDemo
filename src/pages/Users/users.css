@@ -1,6 +1,6 @@
 .users {
   height: calc(100vh - 170px);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .users::-webkit-scrollbar {
   /* 滚动条样式 */
@@ -21,4 +21,3 @@
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
   background-color: silver;
 }
-/*# sourceMappingURL=./users.css.map */

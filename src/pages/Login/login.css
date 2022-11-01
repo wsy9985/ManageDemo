@@ -30,6 +30,14 @@
 }
 .login .login_box .login_set {
   font-size: 20px;
+  position: relative;
+  float: left;
   color: rgba(10, 115, 236, 0.774);
+}
+.login .login_box .login_set2 {
+  font-size: 20px;
+  position: relative;
+  float: right;
+  color: transparent;
 }
 /*# sourceMappingURL=./login.css.map */

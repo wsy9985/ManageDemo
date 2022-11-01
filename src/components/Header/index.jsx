@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react'
-import  {SearchOutlined, DownOutlined, } from '@ant-design/icons'
-import { Dropdown, Menu, Space ,Input, message} from 'antd';
+import  {SearchOutlined, DownOutlined, ExclamationCircleOutlined} from '@ant-design/icons'
+import { Dropdown, Menu, Modal,Space ,Input, message} from 'antd';
 import {useNavigate} from 'react-router-dom'
 import './index.css'
 import defaultAvatar from '../../img/4.webp'
@@ -10,7 +10,9 @@ import logo from '../../img/2.png'
 
 
 export default function() {
+  let timer = null
   const navigate = useNavigate();
+  const {confirm} = Modal
   const onSearch = (value) => console.log(value);
   const [avatar,setAvatar] = useState(defaultAvatar);
   const [username,setUsername] = useState('游客');
@@ -30,10 +32,20 @@ export default function() {
   })
 
   const logOut = () =>{
-    message.success('退出成功,即将返回登录页')
-    localStorage.clear();  // 清除登录保存缓存
-    sessionStorage.clear() // 清除会话存储
-    setTimeout(()=> navigate('/login'),1500)
+    confirm({
+      title:'确认退出吗？',
+      icon:<ExclamationCircleOutlined />,
+      content:'点击确定重新登录',
+      okText:'确定',
+      cancelText:'取消',
+      onOk(){
+        message.success('退出成功,即将返回登录页')
+        localStorage.clear();  // 清除登录保存缓存
+        sessionStorage.clear() // 清除会话存储
+        setTimeout(()=> navigate('/login'),1500)
+      },
+      onCancel(){}
+    })
   }
 
   const dataOut = () =>{
@@ -45,7 +57,10 @@ export default function() {
   }
 
   const go = () =>{
-
+    clearInterval(timer);
+    timer = setTimeout(()=>{
+      alert('hello')
+    },1500)
   }
 
   const items = [
@@ -71,7 +86,7 @@ export default function() {
 
       <div className='right-header'>
           <div className='search-items'>
-              <a href="" onClick={go} target="_blank">
+              <a  onClick={go} target="_blank">
                 <SearchOutlined />
               </a>
               

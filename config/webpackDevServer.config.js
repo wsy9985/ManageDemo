@@ -105,6 +105,11 @@ module.exports = function (proxy, allowedHost) {
         target: 'http://47.93.114.103:6688/manage', // 后台服务地址以及端口号
         changeOrigin: true, //是否跨域
         pathRewrite: { '^/api': '/' }
+      },
+      '/locate': {
+        target: 'http://apimobile.meituan.com', // 后台服务地址以及端口号
+        changeOrigin: true, //是否跨域
+        pathRewrite: { '^/locate': '/locate' }
       }
     },
     onBeforeSetupMiddleware(devServer) {

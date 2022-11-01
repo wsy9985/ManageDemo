@@ -11,7 +11,7 @@ import moment from "moment";
 import "@wangeditor/editor/dist/css/style.css";
 import { ArticleAddApi, ArticleSearchApi, ArticleUpdateApi } from "../../request/api";
 import { useParams,useNavigate } from "react-router-dom";
-
+import './index.css'
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 
 function Edit() {
@@ -35,7 +35,6 @@ function Edit() {
       ArticleSearchApi({ id: params.id }).then((res) => {
         if (res.errCode === 0) {
           let { title, subTitle, content } = res.data;
-          console.log(content);
           setHtml(content);
           setTitle(title);
           setSubTitle(subTitle);
@@ -122,7 +121,7 @@ function Edit() {
             )}
           }
           mode="default"
-          style={{ height: "500px" }}
+          style={{ height: "650px",overflow:"hidden" }}
         />
       </div>
 

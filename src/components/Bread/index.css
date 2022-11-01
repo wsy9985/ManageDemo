@@ -1,0 +1,42 @@
+.bread {
+  height: 22px;
+  line-height: 22px;
+  margin-bottom: 12px;
+}
+.bread .case {
+  position: relative;
+  z-index: 999;
+}
+.bread .case .homeButton {
+  color: #1890ff !important;
+  background: white;
+  border: 1px solid #1890ff !important;
+  border-radius: 4px;
+  margin: -2px 10px 0 -35px;
+  height: 25px;
+}
+.bread .case .homeButton .ant-btn {
+  padding: 0px 5px 0;
+  height: 14px;
+  line-height: 14px;
+}
+.bread .homeHeader {
+  position: relative;
+  top: -100%;
+}
+.bread .homeHeader .header-bottom-right {
+  width: 100%;
+  text-align: right;
+  margin-right: 30px;
+}
+.bread .homeHeader .header-bottom-right img {
+  margin: 0 15px;
+  width: 30px;
+  height: 20px;
+}
+.bread .homeHeader .header-bottom-right span {
+  margin-right: 20px;
+}
+.bread .homeHeader .header-bottom-right span:last-of-type {
+  margin-right: 30px;
+}

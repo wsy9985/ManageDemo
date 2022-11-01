@@ -7,6 +7,7 @@ import { LoginApi } from '../../request/api';
 import axios from 'axios';
 
 export default function Login() {
+    let tourTimer = null;
     const {pathname} = useLocation();
     console.log(pathname);
     const navigate = useNavigate();
@@ -46,6 +47,7 @@ export default function Login() {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
     return (
         <div className='login'>
             <div className='login_box'>
@@ -86,16 +88,24 @@ export default function Login() {
                         <Input.Password  size="large" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="请输入密码"/>
                     </Form.Item>
 
-                    <Form.Item>
+                    <Form.Item style={{float:'left',width:"100%"}}>
                        <Link to="/register" >
                             <div className='login_set'>
                                 没有账号?立即注册
                             </div>
                             
                        </Link>
+                       <Link to='/app'> 
+                            <div className='login_set2'>
+                                <Button size="large"  type='primary' htmlType="submit">游客登录</Button> 
+                            </div>
+                        </Link>
+                       
+                            
+                       
                     </Form.Item>
 
-                    <Form.Item
+                    <Form.Item style={{display:'block'}}
                     >
                         <Button size="large"  prefix={<UserOutlined />} type="primary" htmlType="submit" block>
                             登录

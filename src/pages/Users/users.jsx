@@ -1,6 +1,6 @@
 import { Space, Table, Tag, Pagination, message, Button, Modal, Form, Input, } from 'antd';
 import axios from 'axios'
-import { useState, useEffect, Component } from 'react'
+import { useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import './users.css'
 
@@ -58,8 +58,8 @@ const Users = () => {
     
     const confirm = Modal.confirm;
     let navigate = useNavigate()
-    const [email, setEmail] = useState()
-    const [mobile, setMobile] = useState()
+    const [email, setEmail] = useState('')
+    const [mobile, setMobile] = useState('')
     const [roleName, setRoleName] = useState()
     const [isModalVisible, setIsModalVisible] = useState(false); 
     const [isModalVisible2, setIsModalVisible2] = useState(false);
@@ -143,21 +143,16 @@ const Users = () => {
         
 
     /* 修改记录的回调 */
-    const update = (record) => { 
-        setKeyid(record.id)
-        handleEmail(record.email)
-        setMobile(record.mobile)
+    const update = (record) => {
+        const {id,email,mobile} = record;
+        setKeyid(id)
+        setEmail(email)
+        setMobile(mobile)
         setIsModalVisible2(true);
-    }
-
-    const handleEmail = (value)=>{
-        setEmail(
-            ()=>{
-                const newEmail = value
-                console.log(newEmail);
-                return newEmail
-            }
-        )
+        form2.setFieldsValue({
+            email: email,
+            mobile:mobile
+        });
     }
 
     const handleOk2 = ({
@@ -178,7 +173,7 @@ const Users = () => {
         // 获取成功结果
         .then(res => {
             let { meta} = res.data;
-            console.log((res.data.data));
+            // console.log((res.data.data));
             if (meta.status === 200) {
                 message.success(meta.msg);
                 /* 刷新渲染,并关闭模态框 */
@@ -235,7 +230,6 @@ const Users = () => {
     /* 取消修改的对话框 */
     const handleCancel2 = (r) => {  
         // window.location.reload()
-        
         form2.resetFields()
         setIsModalVisible2(false);
     };
@@ -376,7 +370,6 @@ const Users = () => {
                         span: 16,
                     }}
                     initialValues={{email,mobile}}
-                    
                     onFinish={handleOk2}
                     onFinishFailed={onFinishFailed}
                     form={form2}
@@ -384,6 +377,7 @@ const Users = () => {
                     <Form.Item
                         label="邮箱"
                         name="email"
+                        
                         rules={[
                             {
                                 required: true,
@@ -392,7 +386,7 @@ const Users = () => {
                         ]}
                     >
                         <Input />
-                    </Form.Item>
+                    </Form.Item >
 
                     <Form.Item
                         label="手机号"

@@ -54,10 +54,7 @@ const ListT = () => {
         ArticleDelApi({ id }).then((res) => {
           if (res.errCode === 0) {
             message.success(res.message);
-            // 重新刷新页面,要么重新请求这个列表的数据
-            // 1.window.reload
-            // 2.调用getList()
-            // 3.监听变量
+            // 重新请求这个列表的数据
             setUpdate(update+1)
           }
         });
@@ -87,7 +84,7 @@ const ListT = () => {
                 </Button>,
               ]}
             >
-              <Skeleton loading={false}>
+             
                 <List.Item.Meta
                   title={
                     <a
@@ -100,7 +97,6 @@ const ListT = () => {
                   description={item.subTitle}
                 />
                 <div>{moment(item.date).format("YYYY-MM-DD hh:mm:ss")}</div>
-              </Skeleton>
             </List.Item>
           );
         }}
